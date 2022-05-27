@@ -177,7 +177,7 @@ export default {
         <div class="modal-footer">
           <input
             v-if="edit_mode"
-            type="text"
+            type="password"
             class="form-control"
             :class="{
               'is-invalid': password && !auth,
