@@ -35,20 +35,47 @@ export default {
       type: Function,
     },
   },
+  data() {
+    return {
+      search: "",
+    };
+  },
+  computed: {
+    filteredColleagues() {
+      return this.search && !this.slide
+        ? this.colleagues.filter(
+            (colleague) =>
+              colleague.name
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) ||
+              colleague.capability
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) ||
+              colleague.int_pos
+                .toLowerCase()
+                .includes(this.search.toLowerCase())
+          )
+        : this.colleagues;
+    },
+  },
 };
 </script>
 
 <template>
   <div class="container">
     <div class="pb-3 my-4 border-bottom">
-      <a
-        href="/"
-        class="d-flex align-items-center text-dark text-decoration-none"
-      >
+      <a class="d-flex align-items-center text-dark text-decoration-none">
         <i class="bi bi-person-circle me-2" style="font-size: 32px"></i>
         <span class="fs-4">เพื่อนร่วมงานสำหรับคุณ</span>
       </a>
     </div>
+    <input
+      v-if="!slide"
+      class="form-control mb-4"
+      type="search"
+      v-model="search"
+      placeholder="ค้นหา..."
+    />
   </div>
 
   <div v-if="slide" class="container-fluid px-0 mb-4">
@@ -57,7 +84,7 @@ export default {
       style="cursor: grab"
     >
       <Colleague
-        v-for="colleague in colleagues"
+        v-for="colleague in filteredColleagues"
         :colleague="colleague"
         :onDeleteColleague="onDeleteColleague"
         :onEditColleague="onEditColleague"
@@ -67,7 +94,7 @@ export default {
 
   <div v-else class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-      <div class="col" v-for="colleague in colleagues">
+      <div class="col" v-for="colleague in filteredColleagues">
         <Colleague
           :colleague="colleague"
           :onDeleteColleague="onDeleteColleague"
