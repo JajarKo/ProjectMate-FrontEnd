@@ -41,7 +41,9 @@ export default {
   },
   computed: {
     uploadButtonText() {
-      return this.project_form.image ? "อัพโหลดสำเร็จ กดอีกรอบเพื่อเปลี่ยนไฟล์" : "อัพโหลดไฟล์";
+      return this.project_form.image
+        ? "อัพโหลดสำเร็จ กดอีกรอบเพื่อเปลี่ยนไฟล์"
+        : "อัพโหลดไฟล์";
     },
     uploadButtonClass() {
       return this.project_form.image ? "btn-success" : "btn-danger";
@@ -83,8 +85,10 @@ export default {
         </div>
 
         <div class="modal-body">
+          <p class="text-end text-muted">* บังคับกรอกข้อมูล</p>
+
           <div class="row mb-3">
-            <label for="image" class="col-sm-3 col-form-label">รูป</label>
+            <label for="image" class="col-sm-3 col-form-label">รูป*</label>
             <div class="col-sm-9">
               <UploadcareWidget
                 :buttonText="uploadButtonText"
@@ -96,7 +100,9 @@ export default {
           </div>
 
           <div class="row mb-3">
-            <label for="title" class="col-sm-3 col-form-label">หัวข้องาน</label>
+            <label for="title" class="col-sm-3 col-form-label"
+              >หัวข้องาน*</label
+            >
             <div class="col-sm-9">
               <input
                 type="text"
@@ -111,7 +117,7 @@ export default {
 
           <div class="row mb-3">
             <label for="description" class="col-sm-3 col-form-label"
-              >รายละเอียดงาน</label
+              >รายละเอียดงาน*</label
             >
             <div class="col-sm-9">
               <textarea
@@ -127,7 +133,7 @@ export default {
 
           <div class="row mb-3">
             <label for="qualification" class="col-sm-3 col-form-label"
-              >คุณสมบัติผู้ร่วมงาน</label
+              >คุณสมบัติผู้ร่วมงาน*</label
             >
             <div class="col-sm-9">
               <textarea
@@ -143,7 +149,7 @@ export default {
 
           <div class="row mb-3">
             <label for="positions" class="col-sm-3 col-form-label"
-              >ตำแหน่งที่รับ</label
+              >ตำแหน่งที่รับ*</label
             >
             <div class="col-sm-9">
               <input
@@ -159,7 +165,7 @@ export default {
 
           <div class="row mb-3">
             <label for="company" class="col-sm-3 col-form-label"
-              >ชื่อองค์กร</label
+              >ชื่อองค์กร*</label
             >
             <div class="col-sm-9">
               <input
@@ -177,7 +183,7 @@ export default {
 
           <div class="row mb-3">
             <label for="project_contact" class="col-sm-3 col-form-label"
-              >วิธีติดต่อ</label
+              >วิธีติดต่อ*</label
             >
             <div class="col-sm-9">
               <textarea
@@ -195,7 +201,7 @@ export default {
 
           <div class="row mb-3">
             <label for="project_password" class="col-sm-3 col-form-label"
-              >ตั้งรหัสโพสต์</label
+              >ตั้งรหัสโพสต์*</label
             >
             <div class="col-sm-9">
               <input

@@ -15,7 +15,13 @@ export default {
     return {
       edit_mode: false,
       project_form: JSON.parse(JSON.stringify(this.project)),
+      password: "",
     };
+  },
+  computed: {
+    auth() {
+      return this.password == this.project.project_password;
+    },
   },
   validations() {
     return {
@@ -45,6 +51,7 @@ export default {
       this.onEditProject({ ...this.project_form, id: this.project.id });
       this.v$.$reset();
       this.toggleEdit();
+      this.password = "";
     },
   },
 };
@@ -168,32 +175,56 @@ export default {
         </div>
 
         <div class="modal-footer">
-          <div class="text-end">
-            <i
+          <input
+            v-if="edit_mode"
+            type="text"
+            class="form-control"
+            :class="{
+              'is-invalid': password && !auth,
+            }"
+            v-model="password"
+            placeholder="ใส่รหัสเพื่อแก้ไขข้อมูล"
+          />
+          <div class="align-self-center text-end">
+            <button
               v-if="edit_mode"
-              class="bi bi-save h4 text-success mx-2"
-              :class="{
-                'text-success': !v$.$invalid,
-                'text-muted': v$.$invalid,
-              }"
-              style="cursor: pointer"
-              @click.prevent="submitEditProjectForm"
-            ></i>
-            <i
-              class="bi h4 text-warning mx-2"
-              :class="{
-                'bi-pencil-square': !edit_mode,
-                'bi-x-square': edit_mode,
-              }"
-              style="cursor: pointer"
+              type="button"
+              class="btn btn-success btn-sm mt-2"
+              :disabled="!auth"
+              @click="auth ? submitEditProjectForm() : () => {}"
+            >
+              <i class="bi bi-check-square"></i>
+              บันทึกการแก้ไข
+            </button>
+            <button
+              v-if="edit_mode"
+              type="button"
+              class="btn btn-danger btn-sm ms-2 mt-2"
+              :disabled="!auth"
+              @click="auth ? onDeleteProject(project.id) : () => {}"
+            >
+              <i class="bi bi-x-square"></i>
+              ลบโปรเจคงาน
+            </button>
+            <button
+              v-if="edit_mode"
+              type="button"
+              class="btn btn-secondary btn-sm ms-2 mt-2"
               @click="toggleEdit"
-            ></i>
-            <i
-              class="bi bi-trash h4 text-danger mx-2"
-              style="cursor: pointer"
-              @click="onDeleteProject(project.id)"
-              data-bs-dismiss="modal"
-            ></i>
+            >
+              <i class="bi bi-arrow-up-right-square"></i>
+              ยกเลิกการแก้ไข
+            </button>
+
+            <button
+              v-if="!edit_mode"
+              type="button"
+              class="btn btn-secondary"
+              @click="toggleEdit"
+            >
+              <i class="bi bi-pencil-square me-2 mt-2"></i>
+              แก้ไชโปรเจคงาน
+            </button>
           </div>
         </div>
       </form>
