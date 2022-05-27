@@ -35,20 +35,49 @@ export default {
       type: Function,
     },
   },
+  data() {
+    return {
+      search: "",
+    };
+  },
+  computed: {
+    filteredProjects() {
+      return this.search && !this.slide
+        ? this.projects.filter(
+            (project) =>
+              project.title.toLowerCase().includes(this.search.toLowerCase()) ||
+              project.description
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) ||
+              project.qualification
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) ||
+              project.positions
+                .toLowerCase()
+                .includes(this.search.toLowerCase()) ||
+              project.company.toLowerCase().includes(this.search.toLowerCase())
+          )
+        : this.projects;
+    },
+  },
 };
 </script>
 
 <template>
   <div class="container">
     <div class="pb-3 mb-4 border-bottom" :class="{ 'mt-4': !slide }">
-      <a
-        href="/"
-        class="d-flex align-items-center text-dark text-decoration-none"
-      >
+      <a class="d-flex align-items-center text-dark text-decoration-none">
         <i class="bi bi-journal-bookmark me-2" style="font-size: 32px"></i>
         <span class="fs-4">โปรเจคงานสำหรับคุณ</span>
       </a>
     </div>
+    <input
+      v-if="!slide"
+      class="form-control mb-4"
+      type="search"
+      v-model="search"
+      placeholder="ค้นหา..."
+    />
   </div>
 
   <div v-if="slide" class="container-fluid px-0 mb-4">
@@ -57,7 +86,7 @@ export default {
       style="cursor: grab"
     >
       <Project
-        v-for="project in projects"
+        v-for="project in filteredProjects"
         :project="project"
         :onDeleteProject="onDeleteProject"
         :onEditProject="onEditProject"
@@ -68,7 +97,7 @@ export default {
 
   <div v-else class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <div class="col" v-for="project in projects">
+      <div class="col" v-for="project in filteredProjects">
         <Project
           :project="project"
           :onDeleteProject="onDeleteProject"

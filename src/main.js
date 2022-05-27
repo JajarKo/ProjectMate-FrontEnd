@@ -1,7 +1,6 @@
 // Import Vue modules
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
-import { dragscrollNext } from "vue-dragscroll";
 
 // Import components
 import App from "./App.vue";
@@ -28,7 +27,6 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
-app.directive("dragscroll", dragscrollNext);
 
 app.mount("#app");
 

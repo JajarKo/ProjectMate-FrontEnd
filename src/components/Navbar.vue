@@ -28,7 +28,7 @@
             >
           </li>
           <li class="nav-item">
-            <router-link to="colleagues" class="nav-link" active-class="active"
+            <router-link to="/colleagues" class="nav-link" active-class="active"
               >Colleagues</router-link
             >
           </li>
